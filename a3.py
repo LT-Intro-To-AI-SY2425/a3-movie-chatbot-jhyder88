@@ -171,7 +171,10 @@ def actors_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of actors who acted in the passed in title
     """
-    pass
+    for movie in movie_db:
+        if get_title(movie) == matches[0]:
+            return get_actors(movie)
+    return []
 
 
 def year_by_title(matches: List[str]) -> List[int]:
@@ -183,7 +186,9 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
-    pass
+    for movie in movie_db:
+        if matches[0] == get_title(movie):
+            return [get_year(movie)]
 
 
 def title_by_actor(matches: List[str]) -> List[str]:
@@ -238,7 +243,17 @@ def search_pa_list(src: List[str]) -> List[str]:
         a list of answers. Will be ["I don't understand"] if it finds no matches and
         ["No answers"] if it finds a match but no answers
     """
-    pass
+    #print is to look out how the program is working 
+    for pattern, action in pa_list:
+        #print(pattern, src, action)
+        mat = match(pattern, src)
+        #print(mat)
+        if mat != None:
+            #print("Found")
+            result = action(mat)
+            return(result)
+    
+    return ["I don't understand"]
 
 
 def query_loop() -> None:
